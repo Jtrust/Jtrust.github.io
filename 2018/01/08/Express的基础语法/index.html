@@ -39,8 +39,6 @@
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css">
-  
 
   
 
@@ -159,7 +157,7 @@
 
 
   <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
+    <strong class="toc-title">Posts List</strong>
     <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Express"><span class="toc-text">安装Express</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建服务，监听端口"><span class="toc-text">创建服务，监听端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Express中间件"><span class="toc-text">Express中间件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Express中的路由router"><span class="toc-text">Express中的路由router</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Express中获取客户端传递的信息"><span class="toc-text">Express中获取客户端传递的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Express中静态文件的处理"><span class="toc-text">Express中静态文件的处理</span></a></li></ol>
   </div>
 
@@ -211,7 +209,7 @@
 <blockquote>
 <p>学习Express：<br><a href="http://www.expressjs.com.cn/4x/api.html" target="_blank" rel="noopener">http://www.expressjs.com.cn/4x/api.html</a></p>
 </blockquote>
-<h3 id="安装Express"><a href="#安装Express" class="headerlink" title="安装Express"></a>安装Express</h3><p>如果当前电脑已经安装了yarn，我们可以基于yarn安装express及相关配套插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yarn init -y  生成package.json文件</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> * express：express核心框架</span><br><span class="line"> * body-parser：用来快速解析请求主体中内容的</span><br><span class="line"> * express-session / cookie-parser：方便我们在express中操作session的</span><br><span class="line"> */</span><br><span class="line">yarn add express body-parser express-session cookie-parser</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装Express"><a href="#安装Express" class="headerlink" title="安装Express"></a>安装Express</h3><p>如果当前电脑已经安装了yarn，我们可以基于yarn安装express及相关配套插件<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yarn init -y  生成package.<span class="keyword">json文件</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">/*</span></span><br><span class="line"><span class="keyword"> </span>* express：express核心框架</span><br><span class="line"> * <span class="keyword">body-parser：用来快速解析请求主体中内容的</span></span><br><span class="line"> * express-session / cookie-parser：方便我们在express中操作session的</span><br><span class="line"> */</span><br><span class="line">yarn <span class="keyword">add </span>express <span class="keyword">body-parser </span>express-session cookie-parser</span><br></pre></td></tr></table></figure></p>
 <h3 id="创建服务，监听端口"><a href="#创建服务，监听端口" class="headerlink" title="创建服务，监听端口"></a>创建服务，监听端口</h3><p><code>基于NODE内置模块，使用原生JS代码实现WEB服务</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>),</span><br><span class="line">    fs = <span class="built_in">require</span>(<span class="string">'fs'</span>),</span><br><span class="line">    url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line">http.createServer(<span class="function">(<span class="params">req, res</span>)=&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> &#123;<span class="attr">url</span>:reqURL, method, headers&#125;=req,</span><br><span class="line">        &#123;pathname, query&#125;=url.parse(reqURL, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">if</span> (pathname === <span class="string">'/getMatchList'</span> &amp;&amp; method==<span class="string">'GET'</span>) &#123;</span><br><span class="line">		</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(pathname===<span class="string">'/reg'</span> &amp;&amp; method==<span class="string">'POST'</span>)&#123;</span><br><span class="line">	    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;).listen(<span class="number">8888</span>, ()=&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`server is success~`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <p><code>基于express框架完成</code></p>
 <blockquote>
@@ -274,7 +272,7 @@
   <span id="cover" class="cover hide"></span>
   <div id="modal-dialog" class="modal-dialog hide-dialog">
     <div class="modal-header">
-      <span id="close" class="btn-close">关闭</span>
+      <span id="close" class="btn-close">Close</span>
     </div>
     <hr>
     <div class="modal-body">
