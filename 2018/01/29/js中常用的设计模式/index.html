@@ -4,7 +4,7 @@
   <html class="light page-post">
 
 
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   <title>Js中常用的设计模式 | 张峻滔的空间</title>
@@ -12,16 +12,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="设计模式," />
+    <meta name="keywords" content="设计模式,">
   
 
   <meta name="description" content="模式的起源模式并非起源于软件工程行业，而是建筑学领域。模式的研究起源于建筑设计大师Christopher Alexander关于城市规划和建筑设计的著作。但尽管著作针对建筑学领域，但实际上适用于所有的工程设计领域，包括软件开发设计领域。  亚历山大在《建筑的永恒之道》里这样描述：模式是一条由三个部分组成的通用规则：它表示了一个特定环境、一类问题和一个解决方案之间的关系。每一个模式描述了一个不断重复">
 <meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Js中常用的设计模式">
-<meta property="og:url" content="http://zhangjuntao.com.cn/2018/01/29/js中常用的设计模式/index.html">
+<meta property="og:url" content="http://jtao.pro/2018/01/29/js中常用的设计模式/index.html">
 <meta property="og:site_name" content="张峻滔的空间">
 <meta property="og:description" content="模式的起源模式并非起源于软件工程行业，而是建筑学领域。模式的研究起源于建筑设计大师Christopher Alexander关于城市规划和建筑设计的著作。但尽管著作针对建筑学领域，但实际上适用于所有的工程设计领域，包括软件开发设计领域。  亚历山大在《建筑的永恒之道》里这样描述：模式是一条由三个部分组成的通用规则：它表示了一个特定环境、一类问题和一个解决方案之间的关系。每一个模式描述了一个不断重复">
+<meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2018-01-29T07:11:37.954Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Js中常用的设计模式">
@@ -74,7 +75,7 @@
 
   
 </head>
-
+</html>
 <body>
 
 
@@ -93,56 +94,31 @@
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/archives/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
             博客
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/category/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
             分类
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/tag/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
             标签
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/atom.xml"
-            rel="noopener noreferrer"
-            target="_blank"
-            >
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
             RSS
           </a>
         </li>
       
         <li class="item-toolbox">
-          <a
-            class="CIRCLE"
-            href="/about/"
-            rel="noopener noreferrer"
-            target="_self"
-            >
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
             关于
           </a>
         </li>
@@ -155,7 +131,7 @@
 
 
   <div id="toc" class="toc-article">
-    <strong class="toc-title">Posts List</strong>
+    <strong class="toc-title">文章目录</strong>
     <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模式的起源"><span class="toc-text">模式的起源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计模式的作用"><span class="toc-text">设计模式的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS中常用的设计模式"><span class="toc-text">JS中常用的设计模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单例设计模式"><span class="toc-text">单例设计模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造原型模式：最贴近OOP面向对象编程思想的"><span class="toc-text">构造原型模式：最贴近OOP面向对象编程思想的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布订阅设计模式"><span class="toc-text">发布订阅设计模式</span></a></li></ol>
   </div>
 
@@ -225,6 +201,8 @@
 </blockquote>
 <h2 id="构造原型模式：最贴近OOP面向对象编程思想的"><a href="#构造原型模式：最贴近OOP面向对象编程思想的" class="headerlink" title="构造原型模式：最贴近OOP面向对象编程思想的"></a>构造原型模式：最贴近OOP面向对象编程思想的</h2><blockquote>
 <p>封装类库、插件或者UI组件，基本上都是基于构造原型模式来开发的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tool</span></span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>()&#123;</span><br><span class="line">		<span class="keyword">this</span>.isCompatible=<span class="string">'addEventListener'</span> <span class="keyword">in</span> <span class="built_in">document</span>;<span class="comment">//=&gt;如果不兼容返回FALSE(IE6~8)</span></span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//=&gt;挂载到原型上的方法</span></span><br><span class="line">	css()&#123;</span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//=&gt;挂载到普通对象上的方法</span></span><br><span class="line">	<span class="keyword">static</span> distinct()&#123;</span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Banner</span> <span class="keyword">extends</span> <span class="title">Tool</span></span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(...arg)&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">		<span class="keyword">this</span>.xxx=xxx;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//挂载到子类原型上的方法</span></span><br><span class="line">	bindData()&#123;</span><br><span class="line">		<span class="keyword">this</span>.css();<span class="comment">//=&gt;把父类原型上的方法执行（子类继承了父类，那么子类的实例就可以调取父类原型上的方法了）</span></span><br><span class="line">		<span class="keyword">this</span>.distinct===<span class="literal">undefined</span>;<span class="comment">//子类的实例只能调取父类原型上的方法和父类给实例提供的私有属性方法，但是父类做为普通对象加入的静态方法，子类的实例是无法调取的 (只有这样才可以调取使用：Tool.distinct())</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
 <p>我有三个类 A/B/C ，我想让C继承A和B<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">extends</span> <span class="title">B</span></span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <h2 id="发布订阅设计模式"><a href="#发布订阅设计模式" class="headerlink" title="发布订阅设计模式"></a>发布订阅设计模式</h2><blockquote>
@@ -249,7 +227,7 @@
     <a class="show pull-left" href="/2018/01/21/redux基本用发/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2019/03/08/webpack4-x常用配置/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -271,63 +249,38 @@
   <span id="cover" class="cover hide"></span>
   <div id="modal-dialog" class="modal-dialog hide-dialog">
     <div class="modal-header">
-      <span id="close" class="btn-close">Close</span>
+      <span id="close" class="btn-close">关闭</span>
     </div>
     <hr>
     <div class="modal-body">
       <ul class="list-toolbox">
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/archives/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
               博客
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/category/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
               分类
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/tag/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
               标签
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/atom.xml"
-              rel="noopener noreferrer"
-              target="_blank"
-              >
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
               RSS
             </a>
           </li>
         
           <li class="item-toolbox">
-            <a
-              class="CIRCLE"
-              href="/about/"
-              rel="noopener noreferrer"
-              target="_self"
-              >
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
               关于
             </a>
           </li>
