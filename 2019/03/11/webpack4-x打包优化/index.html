@@ -12,17 +12,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="zhangjuntao,张峻滔,前端,设计,前端开发,用户体验,设计,h5,frontend,design,JavaScript,architecture">
+    <meta name="keywords" content="webpack4.x 项目构建,">
   
 
   <meta name="description" content="区分生产环境和开发环境在开发环境中，我们需要：强大的 source map 和一个有着 live reloading(实时重新加载) 或 hot module replacement(热模块替换) 能力的 localhost server。而生产环境目标则转移至其他方面，关注点在于压缩 bundle、更轻量的 source map、资源优化等，通过这些优化方式改善加载时间。由于要遵循逻辑分离，通常">
+<meta name="keywords" content="webpack4.x 项目构建">
 <meta property="og:type" content="article">
 <meta property="og:title" content="webpack4.x打包优化">
 <meta property="og:url" content="http://jtao.pro/2019/03/11/webpack4-x打包优化/index.html">
 <meta property="og:site_name" content="张峻滔的空间">
 <meta property="og:description" content="区分生产环境和开发环境在开发环境中，我们需要：强大的 source map 和一个有着 live reloading(实时重新加载) 或 hot module replacement(热模块替换) 能力的 localhost server。而生产环境目标则转移至其他方面，关注点在于压缩 bundle、更轻量的 source map、资源优化等，通过这些优化方式改善加载时间。由于要遵循逻辑分离，通常">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-21T15:56:02.498Z">
+<meta property="og:updated_time" content="2019-04-23T16:17:44.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack4.x打包优化">
 <meta name="twitter:description" content="区分生产环境和开发环境在开发环境中，我们需要：强大的 source map 和一个有着 live reloading(实时重新加载) 或 hot module replacement(热模块替换) 能力的 localhost server。而生产环境目标则转移至其他方面，关注点在于压缩 bundle、更轻量的 source map、资源优化等，通过这些优化方式改善加载时间。由于要遵循逻辑分离，通常">
@@ -155,6 +156,11 @@
       
 
       
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/webpack/">webpack</a>
+  </span>
+
 
 
       
@@ -194,8 +200,9 @@
 <li>splitchunks 和dllplugin可以并存吗<br>DllPlugin服务的目标场景是develop环境，DllPlugin打包出的文件则稍显笨重。例如new webpack.IgnorePlugin(/^.\/locale$/, /moment$/), 这种优化moment大小的方式如果moment在dll的entry中，那么在生成的dll文件夹下的包的大小也不会优化了。<br>而在对加载效率更为苛刻的production环境,推荐使用splitChunks进行优化。</li>
 </ul>
 <ul>
-<li>参考<br><a href="https://imweb.io/topic/5b66dd601402769b60847149" target="_blank" rel="noopener">webpack 4 Code Splitting 的 splitChunks 配置探索</a><br><a href="https://www.zhihu.com/question/275961568" target="_blank" rel="noopener">webpack4中， splitchunks 和dllplugin可以并存吗？</a><br><a href="https://juejin.im/post/5af1677c6fb9a07ab508dabb" target="_blank" rel="noopener">一步一步的了解webpack4的splitChunk插件</a></li>
+<li>参考<br><a href="https://imweb.io/topic/5b66dd601402769b60847149" target="_blank" rel="noopener">webpack 4 Code Splitting 的 splitChunks 配置探索</a></li>
 </ul>
+<p><a href="https://juejin.im/post/5af1677c6fb9a07ab508dabb" target="_blank" rel="noopener">一步一步的了解webpack4的splitChunk插件</a></p>
 
     
   </div>
@@ -209,7 +216,7 @@
     <a class="show pull-left" href="/2019/03/08/webpack4-x常用配置/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2019/04/24/函数柯里化/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

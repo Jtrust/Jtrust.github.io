@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>函数柯里化 | 张峻滔的空间</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="柯里化,">
+  
+
+  <meta name="description" content="函数柯里化是函数式编程的重要思想，也是高阶函数中一个重要的应用柯里化 的概念：只传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数我们来体验一下 基本的柯里化拆分实现三个数求和12345678910111213141516171819// 原函数function add(a, b, c) &amp;#123;    return a + b + c;&amp;#125;// 柯里化函数function">
+<meta name="keywords" content="柯里化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数柯里化">
+<meta property="og:url" content="http://jtao.pro/2019/04/24/函数柯里化/index.html">
+<meta property="og:site_name" content="张峻滔的空间">
+<meta property="og:description" content="函数柯里化是函数式编程的重要思想，也是高阶函数中一个重要的应用柯里化 的概念：只传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数我们来体验一下 基本的柯里化拆分实现三个数求和12345678910111213141516171819// 原函数function add(a, b, c) &amp;#123;    return a + b + c;&amp;#125;// 柯里化函数function">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-23T16:17:44.181Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="函数柯里化">
+<meta name="twitter:description" content="函数柯里化是函数式编程的重要思想，也是高阶函数中一个重要的应用柯里化 的概念：只传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数我们来体验一下 基本的柯里化拆分实现三个数求和12345678910111213141516171819// 原函数function add(a, b, c) &amp;#123;    return a + b + c;&amp;#125;// 柯里化函数function">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?d144edded9ba55662fb3533de28c5b60";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">BOX</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">BOX</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本的柯里化拆分"><span class="toc-text">基本的柯里化拆分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通用柯里化函数"><span class="toc-text">通用柯里化函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一版-实现-add-1-2-3-4-5-15-的效果"><span class="toc-text">第一版 实现 add(1)(2, 3)(4)(5)() = 15 的效果</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第二版-实现-add-1-2-3-4-5-15-的效果"><span class="toc-text">第二版 实现 add(1)(2, 3)(4)(5) = 15 的效果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实际应用"><span class="toc-text">实际应用</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-函数柯里化" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">函数柯里化</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.04.24</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Zhang Juntao</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/柯里化/">柯里化</a>
+  </span>
+
+
+
+      
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>函数柯里化是<a href="http://www.ruanyifeng.com/blog/2012/04/functional_programming.html" target="_blank" rel="noopener">函数式编程</a>的重要思想，也是高阶函数中一个重要的应用<br>柯里化 的概念：只传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数<br>我们来体验一下</p>
+<h2 id="基本的柯里化拆分"><a href="#基本的柯里化拆分" class="headerlink" title="基本的柯里化拆分"></a>基本的柯里化拆分</h2><p>实现三个数求和<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 柯里化函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addCurry</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">c</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> a + b + c;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用原函数</span></span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用柯里化函数</span></span><br><span class="line">addCurry(<span class="number">1</span>)(<span class="number">2</span>)(<span class="number">3</span>) <span class="comment">// 6</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="通用柯里化函数"><a href="#通用柯里化函数" class="headerlink" title="通用柯里化函数"></a>通用柯里化函数</h2><h3 id="第一版-实现-add-1-2-3-4-5-15-的效果"><a href="#第一版-实现-add-1-2-3-4-5-15-的效果" class="headerlink" title="第一版 实现 add(1)(2, 3)(4)(5)() = 15 的效果"></a>第一版 实现 add(1)(2, 3)(4)(5)() = 15 的效果</h3><p>例如，n个数求和，其中两个数是1和2（相当于公共参数复用）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curry</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> allArgs = [].slice.call(<span class="built_in">arguments</span>,<span class="number">1</span>); <span class="comment">// 用来接收参数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> args = [].slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">        <span class="comment">// 判断是否执行计算 空参数时，输出结果。</span></span><br><span class="line">        <span class="keyword">if</span> (args.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            allArgs = allArgs.concat(args); <span class="comment">// 收集传入的参数，进行缓存</span></span><br><span class="line">            <span class="keyword">return</span> next;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> fn.apply(<span class="literal">null</span>, allArgs); <span class="comment">// 符合执行条件，执行计算</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> add = curry(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [...arguments].reduce(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b, <span class="number">0</span>);</span><br><span class="line">&#125;,<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">add(<span class="number">5</span>)(<span class="number">6</span>,<span class="number">7</span>)(<span class="number">1</span>)() <span class="comment">//22</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="第二版-实现-add-1-2-3-4-5-15-的效果"><a href="#第二版-实现-add-1-2-3-4-5-15-的效果" class="headerlink" title="第二版 实现 add(1)(2, 3)(4)(5) = 15 的效果"></a>第二版 实现 add(1)(2, 3)(4)(5) = 15 的效果</h4><p>我k,怎么判断是否执行计算呢?<br><code>valueOf</code>和<code>toString</code>。<br>js在获取当前变量值的时候，会根据语境，隐式调用valueOf和toString方法进行获取需要的值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curry</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> allArgs = [].slice.call(<span class="built_in">arguments</span>,<span class="number">1</span>); <span class="comment">// 用来接收参数</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = [].slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">    allArgs = allArgs.concat(args);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">arguments</span>.callee; <span class="comment">// 相当于return next;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 字符类型</span></span><br><span class="line">  next.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="literal">null</span>, allArgs);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// 数值类型</span></span><br><span class="line">  next.valueOf = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="literal">null</span>, allArgs);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p>柯里化常见的三个用途：</p>
+<ul>
+<li>延迟计算</li>
+<li>参数复用</li>
+<li>动态生成函数<br>例子：兼容现代浏览器以及IE浏览器的事件添加方法。我们正常情况可能会这样写：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> addEvent = <span class="function"><span class="keyword">function</span>(<span class="params">el, type, fn, capture</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.addEventListener) &#123;</span><br><span class="line">        el.addEventListener(type, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">            fn.call(el, e);</span><br><span class="line">        &#125;, capture);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.attachEvent) &#123;</span><br><span class="line">        el.attachEvent(<span class="string">"on"</span> + type, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">            fn.call(el, e);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上面的代码，我们每次使用addEvent为元素添加事件的时候，(eg. IE6/IE7)都会走一遍if…else if …，其实，利用柯里化动态生成函数就能解决。改为下面这样子的代码：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var addEvent = (<span class="name">function</span>()&#123;</span><br><span class="line">    if (<span class="name">window</span>.addEventListener) &#123;</span><br><span class="line">        return function(<span class="name">el</span>, sType, fn, capture) &#123;</span><br><span class="line">            el.addEventListener(<span class="name">sType</span>, function(<span class="name">e</span>) &#123;</span><br><span class="line">                fn.call(<span class="name">el</span>, e)<span class="comment">;</span></span><br><span class="line">            &#125;, (<span class="name">capture</span>))<span class="comment">;</span></span><br><span class="line">        &#125;<span class="comment">;</span></span><br><span class="line">    &#125; else if (<span class="name">window</span>.attachEvent) &#123;</span><br><span class="line">        return function(<span class="name">el</span>, sType, fn, capture) &#123;</span><br><span class="line">            el.attachEvent(<span class="string">"on"</span> + sType, function(<span class="name">e</span>) &#123;</span><br><span class="line">                fn.call(<span class="name">el</span>, e)<span class="comment">;</span></span><br><span class="line">            &#125;)<span class="comment">;</span></span><br><span class="line">        &#125;<span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>初始addEvent的执行其实值实现了部分的应用（只有一次的if…else if…判定），而剩余的参数应用都是其返回函数实现的，典型的柯里化。</p>
+<p>例子： bind方法的实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Error'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> _this = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">var</span> args = [...arguments].slice(<span class="number">1</span>)</span><br><span class="line">  <span class="comment">// 返回一个函数</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 因为返回了一个函数，我们可以 new F()，所以需要判断</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">instanceof</span> F) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> _this(...args, ...arguments)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _this.apply(context, args.concat(...arguments))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考：<br><a href="https://www.zhangxinxu.com/wordpress/2013/02/js-currying/" target="_blank" rel="noopener">https://www.zhangxinxu.com/wordpress/2013/02/js-currying/</a><br><a href="https://juejin.im/post/5c243574518825741e7c33ed" target="_blank" rel="noopener">https://juejin.im/post/5c243574518825741e7c33ed</a><br><a href="https://github.com/mqyqingfeng/Blog/issues/42" target="_blank" rel="noopener">https://github.com/mqyqingfeng/Blog/issues/42</a><br><a href="https://juejin.im/post/5b561426518825195f499772" target="_blank" rel="noopener">https://juejin.im/post/5b561426518825195f499772</a><br><a href="https://segmentfault.com/a/1190000008263193" target="_blank" rel="noopener">https://segmentfault.com/a/1190000008263193</a><br><a href="https://juejin.im/post/5b58b5c56fb9a04fa560ec4b" target="_blank" rel="noopener">https://juejin.im/post/5b58b5c56fb9a04fa560ec4b</a><br><a href="https://zhuanlan.zhihu.com/p/31271179" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/31271179</a></p>
+
+    
+  </div>
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/03/11/webpack4-x打包优化/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
